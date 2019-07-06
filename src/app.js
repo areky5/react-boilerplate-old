@@ -1,17 +1,13 @@
-// Webpack entry point
+import React from "react";
+import ReactDOM from "react-dom";
 
-import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from "react-redux";
-import store from "./store/index";
-import Router from './router/routes';
+const App = () => {
+  return (
+    <div>
+      <p>React here!</p>
+    </div>
+  );
+};
 
-
-render((
-  <Provider store={store}>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
-  </Provider>
-), document.getElementById('app'));
+export default App;
+ReactDOM.render(<App />, document.getElementById("app"));

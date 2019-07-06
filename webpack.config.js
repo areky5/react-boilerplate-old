@@ -1,48 +1,11 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const merge = require("webpack-merge");
+const commonConfig = require("./config/webpack.common.js");
+const productionConfig = require("./config/webpack.production.js");
+const developmentConfig = require("./config/webpack.development.js");
 
-const htmlPlugin = new HtmlWebPackPlugin({
-  template: "./src/index.html",
-  filename: "./index.html"
-});
-
-module.exports = {
-  entry: "./src/app.js",
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader"
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: "[name]_[local]_[hash:base64]",
-              sourceMap: true,
-              minimize: true
-            }
-          }
-        ]
-      }
-    ]
-  },
-  plugins: [htmlPlugin]
+module.exports = mode => {
+  if (mode === "production") {
+    return merge(commonConfig, productionConfig, { mode });
+  }
+  return merge(commonConfig, developmentConfig, { mode });
 };
